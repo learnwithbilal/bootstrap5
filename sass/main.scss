@@ -1,0 +1,175 @@
+// load custom font from google fonts
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+// import functions first (so you can use them in this file)
+@import "../node_modules/bootstrap/scss/functions";
+
+// redefine variables not dependent on anything else
+
+// global variables
+$enable-rounded: false;
+$enable-button-pointers: false;
+$enable-negative-margins: true;
+$enable-smooth-scroll: false;
+
+// theme color variables
+$primary: #ff3287;
+$secondary: #16be7e;
+$light: #fff9f1;
+
+// font family
+$font-family-base: "Poppins";
+
+// font sizes
+$font-size-base: 1rem;
+$lead-font-size: $font-size-base * 1.5;
+
+// headings
+$headings-font-weight: 300;
+$headings-line-height: 1.5;
+$h1-font-size: $font-size-base * 2.75;
+
+// links
+$link-color: $secondary;
+$link-decoration: none;
+$link-hover-decoration: underline;
+$link-shade-percentage: 30%;
+$link-hover-color: shift-color($link-color, -$link-shade-percentage);
+
+// breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 500px,
+  md: 700px,
+  lg: 900px,
+  xl: 1100px,
+  xxl: 1300px
+);
+
+// spacers
+$spacer: 1.5rem;
+$spacers: (
+  0: 0,
+  1: $spacer / 4,
+  2: $spacer / 2,
+  3: $spacer,
+  4: $spacer * 2,
+  5: $spacer * 4,
+);
+
+// borders
+// $border-width: 3px;
+$border-widths: (
+  1: 1px,
+  2: 3px,
+  3: 5px,
+  4: 7px,
+  5: 9px
+);
+$border-color: $primary;
+
+// import variables and mixins files (so you can use them below)
+// any redefined vars above will be incorporated into the files (e.g. in maps)
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// anything that depends on variables/mixins file defined below
+
+.btn-truncate {
+  max-width: 100px;
+  @include text-truncate;
+}
+
+// add colors to theme
+$custom-colors: (
+  "primary-light": #fff8fb,
+  "secondary-light": #f6fffb
+);
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// remove colors from theme
+$theme-colors: map-remove($theme-colors, "danger");
+
+// add classes for color pallette colors
+@each $color, $val in $colors {
+  .bg-#{$color} {
+    background-color: $val
+  }
+  .bg-#{$color}-light {
+    background-color: tint-color($val, 80%)
+  }
+  .bg-#{$color}-dark {
+    background-color: shade-color($val, 30%)
+  }
+  .text-#{$color} {
+    color: $val
+  }
+  .text-#{$color}-light {
+    color: tint-color($val, 80%)
+  }
+  .text-#{$color}-dark {
+    color: shade-color($val, 30%)
+  }
+}
+
+// add display heading
+$custom-display-font-sizes: (
+  7: 2rem,
+);
+$display-font-sizes: map-merge($custom-display-font-sizes, $display-font-sizes);
+
+// utility api - import utility file first
+@import "../node_modules/bootstrap/scss/utilities";
+
+// adding utilities
+$custom-utilities: (
+  "rotate": (
+    property: transform,
+    class: rotate,
+    values: (
+      0: rotate(0deg),
+      20: rotate(20deg),
+      40: rotate(40deg),
+      60: rotate(60deg),
+      80: rotate(80deg),
+      100: rotate(100deg),
+      120: rotate(120deg),
+      140: rotate(140deg),
+      160: rotate(160deg),
+      180: rotate(180deg),
+    )
+  ),
+  "opacity": (
+    property: opacity,
+    class: o,
+    state: hover,
+    values: (
+      0: 0,
+      25: .25,
+      50: .5,
+      75: .75,
+      100: 1,
+    )
+  ),
+);
+$utilities: map-merge($utilities, $custom-utilities);
+
+// modifying utilities
+$modified-utilities: (
+  "border-bottom": (
+    property: border-bottom,
+    values: (
+      null: $border-width dotted $border-color,
+      0: 0,
+    )
+  ),
+  "display": map-merge(
+    map-get($utilities, "display"),
+    ( class: dis ),
+  ),
+);
+$utilities: map-merge($utilities, $modified-utilities);
+
+// import bootstrap whole sass lib (incorporates all above redefined vars & values)
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "./_featured";
